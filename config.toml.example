@@ -1,0 +1,37 @@
+#This is an example of config file. All values set here are set by DEFAULT.
+#So if you are ok with some values, you can even remove such lines from your config file, it will work
+#If you have local MQTT server with anonymous access, even empty config file should work for you
+
+#MQTT Address
+address = "127.0.0.1:1883"
+
+#MQTT Username, leave empty if you don't need auth
+username = ""
+
+#MQTT Password, leave empty if you don't need auth
+password = ""
+
+#MQTT topic _template_ where battery status updates should be sent (%s will be replaced with scooter's name or MAC address)
+battery_topic = "ninebot/%s/battery"
+
+#MQTT topic _template_ where availability updates should be sent (%s will be replaced with scooter's name or MAC address)
+#Set to "disable" to disable availability updates
+availability_topic = "ninebot/%s/available"
+
+#This value will be sent to availability topic (if enabled) when scooter is online
+payload_available = "online"
+
+#This value will be sent to availability topic (if enabled) when scooter is offline
+payload_not_available = "offline"
+
+#If set to "name", it will use scooters' names to replaces %s in MQTT topics' templates. If set to "mac", it will use scooter's MAC addresses
+scooter_naming = "name"
+
+#Fill this array with MAC addresses of scooters you don't want to connect. Case doesn't matter but use a colon as a separator
+#Like this:
+#ignored_scooters = [
+# "7E:C5:95:AA:77:50",
+# "24:15:E1:40:48:EC",
+# "DE:37:2B:8F:5C:67",
+#]
+ignored_scooters = []
