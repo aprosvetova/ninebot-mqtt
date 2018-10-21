@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/aprosvetova/ninebot-status/mqtt"
-	"github.com/aprosvetova/ninebot-status/scooter"
+	"github.com/aprosvetova/ninebot-mqtt/mqtt"
+	"github.com/aprosvetova/ninebot-mqtt/scooter"
 	"github.com/currantlabs/ble"
 	"github.com/currantlabs/ble/linux"
 	"log"
