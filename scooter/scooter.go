@@ -1,8 +1,10 @@
 package scooter
 
 import (
+	"bytes"
 	"context"
 	"errors"
+	"github.com/aprosvetova/ninebot-mqtt/scooter/protocol"
 	"github.com/currantlabs/ble"
 	"log"
 	"strings"
@@ -11,7 +13,6 @@ import (
 )
 
 var ninebotManufacturerData = []byte{0x4e, 0x42, 0x21, 0x00, 0x00, 0x00, 0x00, 0xde}
-var batteryRequestPacket = []byte{0x5A, 0xA5, 0x01, 0x3E, 0x20, 0x01, 0x22, 0x02, 0x7B, 0xFF} //magic 'request battery status' packet, thx to YouDrive lite
 var mutex = &sync.Mutex{}
 
 type Scooter struct {
@@ -32,12 +33,7 @@ func FindScooters() (found []string, err error) {
 		if len(data) != 8 {
 			return false
 		}
-		for i := 0; i < 8; i ++ {
-			if data[i] != ninebotManufacturerData[i] {
-				return false
-			}
-		}
-		return true
+		return bytes.Compare(data, ninebotManufacturerData) == 0
 	})
 	mutex.Unlock()
 	for a := range m {
@@ -103,7 +99,7 @@ func requestPower(cln ble.Client, p *ble.Profile) error {
 	if u == nil {
 		return errors.New("can't find characteristic")
 	}
-	err := cln.WriteCharacteristic(u.(*ble.Characteristic), batteryRequestPacket, true)
+	err := cln.WriteCharacteristic(u.(*ble.Characteristic), protocol.GetBattery(), true)
 	return err
 }
 
