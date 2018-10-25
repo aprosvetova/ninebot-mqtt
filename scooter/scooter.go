@@ -33,7 +33,7 @@ func FindScooters() (found []string, err error) {
 		if len(data) != 8 {
 			return false
 		}
-		return bytes.Compare(data, ninebotManufacturerData) == 0
+		return bytes.Equal(data, ninebotManufacturerData)
 	})
 	mutex.Unlock()
 	for a := range m {

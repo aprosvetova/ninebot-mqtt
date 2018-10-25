@@ -30,7 +30,7 @@ func ParseResponse(raw []byte) (*Response, error) {
 	if raw[2] != uint8(len(raw) - 9) {
 		return nil, errors.New("wrong payload length byte")
 	}
-	if bytes.Compare(raw[len(raw)-2:], getChecksum(raw[2:len(raw)-2])) != 0 {
+	if !bytes.Equal(raw[len(raw)-2:], getChecksum(raw[2:len(raw)-2])) {
 		return nil, errors.New("wrong checksum")
 	}
 	response := &Response{
